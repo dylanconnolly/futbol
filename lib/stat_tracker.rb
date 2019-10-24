@@ -54,4 +54,42 @@ class StatTracker
     end
     (biggest.away_goals - biggest.home_goals).abs
   end
+
+  def percentage_home_wins
+    home = @games.find_all do |game|
+      game.home_goals > game.away_goals
+    end
+      home_wins = home.count / @games.count.to_f * 100
+      home_wins
+      # puts "#{home_wins}%"
+  end
+
+  def percentage_visitor_wins
+    visitor = @games.find_all do |game|
+      game.away_goals > game.home_goals
+    end
+    away_wins = visitor.count / @games.count.to_f * 100
+    away_wins
+  end
+
+  def percentage_tie_games
+    ties = @games.find_all do |game|
+      game.home_goals == game.away_goals
+    end
+    tie_games = ties.count / @games.count.to_f * 100
+    tie_games
+  end
+
+  # def game_count_by_season(season)
+  #
+  # end
+  def average_goals_per_game
+    total_goals = @games.sum do |game|
+      game.home_goals + game.away_goals
+    end
+    average = total_goals / @games.count.to_f
+  end
+
+  
+
 end
